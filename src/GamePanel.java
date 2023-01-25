@@ -6,6 +6,15 @@ import java.util.Map;
 
 public class GamePanel extends JPanel {
 
+    public GamePanel(int width, int height) {
+        this.setPreferredSize(new Dimension(width, height));
+        // setting the background color of the component
+        this.setBackground(Color.BLACK);
+    }
+
+    public static boolean isPaddle1Frozen = false;
+    public static boolean isPaddle2Frozen = false;
+
     // creating paddles
     public static Paddle paddle1 = new Paddle(Paddle.DEFAULT_PADDLE1_XPOSITION, Paddle.DEFAULT_PADDLE_YPOSITION, Paddle.DEFAULT_PADDLE_WIDTH, Paddle.DEFAULT_PADDLE_HEIGHT, Paddle.DEFAULT_PADDLE_YSPEED, Paddle.DEFAULT_PADDLE1_COLOR);
     public static Paddle paddle2 = new Paddle(Paddle.DEFAULT_PADDLE2_XPOSITION, Paddle.DEFAULT_PADDLE_YPOSITION, Paddle.DEFAULT_PADDLE_WIDTH, Paddle.DEFAULT_PADDLE_HEIGHT, Paddle.DEFAULT_PADDLE_YSPEED, Paddle.DEFAULT_PADDLE2_COLOR);
@@ -21,12 +30,6 @@ public class GamePanel extends JPanel {
             repaint();
         }
     });
-
-    public GamePanel(int width, int height) {
-        this.setPreferredSize(new Dimension(width, height));
-        // setting the background color of the component
-        this.setBackground(Color.BLACK);
-    }
 
     // for resetting the game
     public static void reset() {
@@ -58,26 +61,22 @@ public class GamePanel extends JPanel {
                     // this means a key has been pressed so let the ball start moving
                     ball.gameStartInitiatingBallMovementProperties(1, -1);
                 }
-
                 if(key == 87 || key == 83) {
-                    paddle1.move();
+                    if(!isPaddle1Frozen) {
+                        paddle1.move();
+                    }
                 }
                 if(key == 38 || key == 40) {
-//                    if paddle2 movement is true
-                    paddle2.move();
+                    // if paddle2 movement is true
+                    if(!isPaddle2Frozen) {
+                        paddle2.move();
+                    }
                 }
 
             }
         }
 
-//         moving ball
-//        if(!ball.nextBallPosCollidesWithPaddle1OrPaddle2TopOrBottom()) {
-            ball.move();
-//        }
-//        ball.move();
-
-        //checking collisions
-//        paddle1.checkCollisionAndUncollide();
-//        paddle2.checkCollisionAndUncollide();
+//      moving ball
+        ball.move();
     }
 }

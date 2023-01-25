@@ -54,4 +54,7 @@ public class Paddle extends Rectangle {
         this.yDirection = yDirection;
     }
     // getters
+    public int getYSpeed() {
+        return this.ySpeed;
+    }
 }
