@@ -25,6 +25,10 @@ public class GamePanel extends JPanel {
     // creating middle line
     public static Line middleLine = new Line(Line.MIDDLE_LINE_X, Line.MIDDLE_LINE_Y, Line.MIDDLE_LINE_WIDTH, Line.MIDDLE_LINE_HEIGHT, Color.WHITE);
 
+    // creating two scores
+    public static Score score1 = new Score(Score.DEFAULT_SCORE1_X, Score.DEFAULT_SCORE1_Y, Score.DEFAULT_SCORE1_COLOR, Score.DEFAULT_SCORE1_FONT, Score.DEFAULT_SCORE1_STARTING_SCORE);
+    public static Score score2 = new Score(Score.DEFAULT_SCORE2_X, Score.DEFAULT_SCORE2_Y, Score.DEFAULT_SCORE2_COLOR, Score.DEFAULT_SCORE2_FONT, Score.DEFAULT_SCORE2_STARTING_SCORE);
+
     public Timer timer = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             repaint();
@@ -50,6 +54,9 @@ public class GamePanel extends JPanel {
         ball.draw(g);
         // drawing the line down the middle
         middleLine.drawDottedLineDownScreen(g);
+        // drawing the score
+        score1.draw(g);
+        score2.draw(g);
 
         // doing actions on the keys that have a value of 1 (currently active)
         for(Map.Entry<Integer, Integer> entry : Pong.activeKeysHashMap.entrySet()) {

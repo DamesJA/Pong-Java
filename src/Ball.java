@@ -61,10 +61,12 @@ public class Ball extends Rectangle {
         }
         // left wall collision
         if(this.x <= 0) {
+            GamePanel.score2.addToScore(1);
             GamePanel.reset();
         }
         // right wall collision
         if(this.x >= Pong.GAME_WIDTH - this.width) {
+            GamePanel.score1.addToScore(1);
             GamePanel.reset();
         }
 
