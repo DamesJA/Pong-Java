@@ -1,4 +1,6 @@
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Ball extends Rectangle {
@@ -44,7 +46,7 @@ public class Ball extends Rectangle {
 //        }
     }
 
-    public void move() {
+    public void move() throws LineUnavailableException, IOException {
         this.x += this.xSpeed * this.xDirection;
         this.y += this.ySpeed * this.yDirection;
         checkCollision();
@@ -53,19 +55,31 @@ public class Ball extends Rectangle {
     public void checkCollision() {
         // ceiling collision
         if(this.y <= 0) {
+            // play sound
+            GamePanel.top_and_bottom_wall_hit_sound_1.startClip();
+
             this.yDirection *= -1;
         }
          // floor collision
         if(this.y >= Pong.GAME_HEIGHT - this.height) {
+            // play sound
+            GamePanel.top_and_bottom_wall_hit_sound_1.startClip();
+
             this.yDirection *= -1;
         }
         // left wall collision
         if(this.x <= 0) {
+            // play sound
+            GamePanel.left_and_right_wall_hit_sound_1.startClip();
+
             GamePanel.score2.addToScore(1);
             GamePanel.reset();
         }
         // right wall collision
         if(this.x >= Pong.GAME_WIDTH - this.width) {
+            // play sound
+            GamePanel.left_and_right_wall_hit_sound_1.startClip();
+
             GamePanel.score1.addToScore(1);
             GamePanel.reset();
         }
@@ -75,7 +89,10 @@ public class Ball extends Rectangle {
         // checking collision between paddle and ball on all paddle sides that are not facing their own wall
         // paddle1 collision
         if(this.getBounds2D().intersects(GamePanel.paddle1.getBounds2D())) {
-            // right-side collision
+            // no matter what type of collision we play the paddle hit sound
+            GamePanel.paddle_hit_sound_1.startClip();
+
+//             right-side collision
             if((this.x + this.xSpeed > GamePanel.paddle1.getX() + GamePanel.paddle1.getWidth())
                     && (this.y + this.height > GamePanel.paddle1.getY() + (this.height / 4.0)) // y value of bottom of ball is past 1/4 of the ball height from the top of the paddle
                     && (this.y < GamePanel.paddle1.getY() + GamePanel.paddle1.getHeight() - (this.height / 4.0))) { // y value of top of ball is less than 1/4 into the paddle from the bottom
@@ -114,6 +131,9 @@ public class Ball extends Rectangle {
         }
         // paddle2 collision
         if(this.getBounds2D().intersects(GamePanel.paddle2.getBounds2D())) {
+            // no matter what type of collision we play the paddle hit sound
+            GamePanel.paddle_hit_sound_1.startClip();
+
             // left-side collision
             if((this.x + this.width - this.xSpeed < GamePanel.paddle2.getX())
                     && (this.y + this.height > GamePanel.paddle2.getY() + (this.height / 4.0)) // y value of bottom of ball is past 1/4 of the ball height from the top of the paddle

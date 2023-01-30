@@ -1,7 +1,10 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Map;
 
 public class GamePanel extends JPanel {
@@ -10,6 +13,20 @@ public class GamePanel extends JPanel {
         this.setPreferredSize(new Dimension(width, height));
         // setting the background color of the component
         this.setBackground(Color.BLACK);
+    }
+
+    public static SoundClip paddle_hit_sound_1;
+    public static SoundClip left_and_right_wall_hit_sound_1;
+    public static SoundClip top_and_bottom_wall_hit_sound_1;
+
+    static {
+        try {
+            paddle_hit_sound_1 = new SoundClip("C:/Users/amant/OneDrive/Documents/Java Own Projects/Pong/src/resources/sounds/paddle_hit_sound_1.wav");
+            left_and_right_wall_hit_sound_1 = new SoundClip("C:/Users/amant/OneDrive/Documents/Java Own Projects/Pong/src/resources/sounds/left_and_right_wall_hit_sound_1.wav");
+            top_and_bottom_wall_hit_sound_1 = new SoundClip("C:/Users/amant/OneDrive/Documents/Java Own Projects/Pong/src/resources/sounds/top_and_bottom_wall_hit_sound_1.wav");
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean isPaddle1Frozen = false;
@@ -84,6 +101,12 @@ public class GamePanel extends JPanel {
         }
 
 //      moving ball
-        ball.move();
+        try {
+            ball.move();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
